@@ -37,4 +37,52 @@ register_nav_menus(
         )
 );
 
+// custom post type
+function project_post_type() {
+
+    $args = array(
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array(
+            'title',
+            'editor',
+            'thumbnail',
+            'excerpt',
+            'custom-fields',
+            'revisions',
+        ),
+        'rewrite' => array('slug' => 'projects'),
+        'labels' => array(
+            'name' => 'Projects',
+            'singular_name' => 'Project',
+            'add_new_item' => 'Add New Project',
+            'edit_item' => 'Edit Project',
+            'all_items' => 'All Projects',
+            'view_item' => 'View Project',
+        ),
+        'menu_icon' => 'dashicons-portfolio',
+        'hierarchical' => true
+    );
+
+    register_post_type('projects', $args);
+
+
+}
+add_action('init', 'project_post_type');
+
+function project_taxonomy() {
+
+    $args = array(
+        'public' => true,
+        'labels' => array(
+            'name' => 'Project Categories',
+            'singular_name' => 'Project Category'
+        ),
+        'rewrite' => array('slug' => 'project-categories'),
+        'hierarchical' => true
+    );
+   
+    register_taxonomy('project_categories', array('projects'), $args);
+}
+add_action('init', 'project_taxonomy');
 ?>
